@@ -12,4 +12,11 @@ public class Quantity {
     public int getAmount(){
         return amount;
     }
+    public boolean isLessThan(Quantity target){
+        return this.amount < target.amount;
+    }
+
+    public  Quantity add(Quantity quantity){
+        return new Quantity(this.amount + quantity.amount);
+    }
 }
