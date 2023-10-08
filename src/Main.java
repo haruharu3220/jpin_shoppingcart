@@ -1,17 +1,17 @@
-// Shift を 2 回押して 'どこでも検索' ダイアログを開き、`show whitespaces` と入力して
-// Enter キーを押します。これでコードに空白文字が表示されます。
 public class Main {
-    public static void main(String[] args) {
-        // ハイライトされたテキストにキャレットがある状態で Opt+Enter を押して
-        // IntelliJ IDEA が提案する修正方法を表示します。
-        System.out.printf("Hello and welcome!");
+    public static void main(String[] args) throws Exception{
 
-        // コードを実行するには Ctrl+R を押すか、ガターにある緑の矢印ボタンをクリックします。
-        for (int i = 1; i <= 5; i++) {
+        Item apple = new Item(new ItemName("apple"),new ItemPrice(Currency.YEN,100));
 
-            // Ctrl+D を押してコードのデバッグを開始します。ブレークポイントを 1 つ設定しましたが、
-            // Cmd+F8 を押すといつでも他のブレークポイントを追加できます。
-            System.out.println("i = " + i);
+        Item banana = new Item(new ItemName("banana"),new ItemPrice(Currency.YEN,80));
+
+        ShoppingCart cart = new ShoppingCart();
+        cart.add(new Order(apple, new Quantity(3)));
+        cart.add(new Order(banana, new Quantity(5)));
+        cart.add(new Order(apple, new Quantity(3),DealType.CREDIT));
+
+        Total total = cart.getTotal();
+        System.out.println(total.getAmount());
+
         }
     }
-}

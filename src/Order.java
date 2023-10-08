@@ -1,10 +1,13 @@
-import javax.swing.*;
-
 public class Order {
     private final Item item;
     private final Quantity quantity;
+    private final DealType type;
 
     public Order(Item item, Quantity quantity) {
+        this(item, quantity, DealType.DEBIT);
+    }
+
+    public Order(Item item, Quantity quantity, DealType type){
         super();
         if(item == null){
             throw new IllegalArgumentException();
@@ -14,8 +17,9 @@ public class Order {
         }
         this.item = item;
         this.quantity = quantity;
-
+        this.type = type;
     }
+
     public Order(Item item, Quantity quantity,QuantityLimit limit) throws LimitOverException{
         this(item,quantity);
         limit.check(this);
@@ -25,7 +29,7 @@ public class Order {
 
     public Total getTotal(){
         ItemPrice price = this.item.getPrice().multi(quantity);
-        return new Total(price.getAmount());
+        return new Total(price.getAmount(),this.type);
     }
 
     public boolean isLessThan(Order target){
@@ -40,6 +44,10 @@ public class Order {
             throw  new IllegalArgumentException();
         }
         return OrderFactory.create(item,quantity.add(order.quantity));
+    }
+
+    public boolean isSameItem(Item item){
+        return this.item.equals(item);
     }
 
 }
